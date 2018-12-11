@@ -14,20 +14,19 @@ public class DetailLand {
     public static void main(String[] args)throws InputMismatchException {
        
         //instantiate chemical objects and place into sets for chemicalMap's values
-        Chemical superClean = new Cleaner();
-        Chemical superDegreaser = new Cleaner();
-        Set<Chemical> cleanerSet = new HashSet();
-        cleanerSet.add(superClean);
-        cleanerSet.add(superDegreaser);
         
         Chemical colinite845 = new Sealant();
+        colinite845.setChemicalName("colinite 845");
         Chemical powerLock = new Sealant();
+        powerLock.setChemicalName("power lock");
         Set<Chemical> sealantSet = new HashSet();
         sealantSet.add(powerLock);
         sealantSet.add(colinite845);
         
         Chemical heavyPolish = new Polish();
+        heavyPolish.setChemicalName("heavy polish");
         Chemical finePolish = new Polish();
+        finePolish.setChemicalName("fine polish");
         Set<Chemical> polishSet = new HashSet();
         polishSet.add(heavyPolish);
         polishSet.add(finePolish);
@@ -35,12 +34,10 @@ public class DetailLand {
         Chemical hyperDressing = new Dressing();
         hyperDressing.setChemicalName("hyper dressing");
         hyperDressing.getChemicalName();
-        Set<Chemical> dressingSet = new HashSet();
-        dressingSet.add(hyperDressing);
-        
+        Chemical[] dressingArray = new Dressing[1];
+        dressingArray[0] = hyperDressing;
         
         HashMap<String, Set<Chemical>> chemicalMap = new HashMap();
-        chemicalMap.put("cleaners", cleanerSet);
         chemicalMap.put("sealants", sealantSet);
         chemicalMap.put("polishes", polishSet);
         chemicalMap.put("dressings", dressingSet);
@@ -110,29 +107,28 @@ public class DetailLand {
        public static void accessChemicals(Map m){
 
         Set chemKeys = m.keySet();
-        Iterator chemIterator = chemKeys.iterator();
         
-        while(chemIterator.hasNext()){
-            System.out.print(chemIterator.next() +" ");
-        }//close while
-           System.out.println("");
-           System.out.println("select one of the above chemical types to view");
-           Scanner s = new Scanner(System.in);
-           String accessScanner = s.next();        
-           switch(accessScanner){
-               case "dressings":
-                    System.out.println("You have:" + m.get("dressings"));
-                    break;
-                case "sealants":
-                    break;
-               case "polishes":
-                    break;
-                case "cleaners":
-                    break;
-                default:
-                    System.out.println("Please input one of the following: " + m.keySet());
-                    break;
-           }//close switch statements
+    Set keys = m.keySet();
+
+       for (Iterator i = keys.iterator(); i.hasNext(); ) {
+       String key = (String) i.next();
+       HashSet value = (HashSet) m.get(key);
+           System.out.println(key + " : " + value.remove(i));
+   }
+//        Iterator chemIterator = chemKeys.iterator();
+//        Chemical chemKey = (Chemical)chemIterator.next();
+//        while(chemIterator.hasNext()){
+//            System.out.println(chemIterator.next());
+//            System.out.println(chemKey.getChemicalName());
+//        }//close while
+//           System.out.println("select one of the above chemical types to view");
+//           Scanner s = new Scanner(System.in);
+//           String accessScanner = s.next();        
+//         if("dressing".equals(accessScanner)){ 
+////             String dressingName = chemKey;
+////             System.out.println(m.get(chemKey));
+//         }
+
            
     }//close method
 
