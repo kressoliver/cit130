@@ -7,6 +7,7 @@ package detailgarage;
  */
 public class Tool {
 
+    private String toolName;
     final int MAX_QUALITY = 100;
     private int toolQuality = 100;
     
@@ -21,4 +22,10 @@ public class Tool {
     public int getToolQuality(){
         return toolQuality;
     }  
+    public void setToolName(String tName){
+        toolName = tName;
+    }
+    public String getToolName(){
+        return toolName;
+    }
 }

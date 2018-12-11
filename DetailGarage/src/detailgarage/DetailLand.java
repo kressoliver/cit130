@@ -13,23 +13,23 @@ public class DetailLand {
 
     public static void main(String[] args)throws InputMismatchException {
        
-        //instantiate chemical objects and place into sets for chemicalMap's values
+        //instantiate chemical objects and place into sets for chemicalMap'chemicalTypeScanner values
         
         Chemical colinite845 = new Sealant();
         colinite845.setChemicalName("colinite 845");
         Chemical powerLock = new Sealant();
         powerLock.setChemicalName("power lock");
-        Set<Chemical> sealantSet = new HashSet();
-        sealantSet.add(powerLock);
-        sealantSet.add(colinite845);
+        Chemical[] sealantArray = new Sealant[2];
+        sealantArray[0] = colinite845;
+        sealantArray[1] = powerLock;
         
         Chemical heavyPolish = new Polish();
         heavyPolish.setChemicalName("heavy polish");
         Chemical finePolish = new Polish();
         finePolish.setChemicalName("fine polish");
-        Set<Chemical> polishSet = new HashSet();
-        polishSet.add(heavyPolish);
-        polishSet.add(finePolish);
+        Chemical[] polishArray = new Polish[2];
+        polishArray[0] = finePolish;
+        polishArray[1] = heavyPolish;
         
         Chemical hyperDressing = new Dressing();
         hyperDressing.setChemicalName("hyper dressing");
@@ -37,35 +37,42 @@ public class DetailLand {
         Chemical[] dressingArray = new Dressing[1];
         dressingArray[0] = hyperDressing;
         
-        HashMap<String, Set<Chemical>> chemicalMap = new HashMap();
-        chemicalMap.put("sealants", sealantSet);
-        chemicalMap.put("polishes", polishSet);
-        chemicalMap.put("dressings", dressingSet);
+        HashMap<String, Chemical[]> chemicalMap = new HashMap();
+        chemicalMap.put("sealants", sealantArray);
+        chemicalMap.put("polishes", polishArray);
+        chemicalMap.put("dressings", dressingArray);
         
         
-        //instantiate tool objects and place into sets toolMap's values
+        //instantiate tool objects and place into sets toolMap'chemicalTypeScanner values
         Tool wheelBrush = new Brush();
+        wheelBrush.setToolName("wheel brush");
         Tool interiorBrush = new Brush();
-        Set<Tool> brushSet = new HashSet();
-        brushSet.add(wheelBrush);
-        brushSet.add(interiorBrush);
+        interiorBrush.setToolName("interior brush");
+        Tool[] brushArray = new Brush[2];
+        brushArray[0] = wheelBrush;
+        brushArray[1] = interiorBrush;
         
         Tool foamApplicator = new Applicator();
+        foamApplicator.setToolName("foam applicator");
         Tool microfiberApplicator = new Applicator();
-        Set<Tool> appSet = new HashSet();
-        appSet.add(foamApplicator);
-        appSet.add(microfiberApplicator);
+        microfiberApplicator.setToolName("microfiber applicator");
+        Tool[] appArray = new Applicator[2];
+        appArray[0] = foamApplicator;
+        appArray[1] = microfiberApplicator;
         
         Tool glassTowel = new Towel();
+        glassTowel.setToolName("glass towel");
         Tool paintTowel = new Towel();
-        Set<Tool> towelSet = new HashSet();
-        towelSet.add(glassTowel);
-        towelSet.add(paintTowel);
+        paintTowel.setToolName("paint towel");
+        Tool[] towelArray = new Towel[2];
+        towelArray[0] = glassTowel;
+        towelArray[1] = paintTowel;
+      
         
-        HashMap<String, Set<Tool>> toolMap = new HashMap();
-        toolMap.put("brushes", brushSet);
-        toolMap.put("towels", towelSet);
-        toolMap.put("applicators", appSet);
+        HashMap<String, Tool[]> toolMap = new HashMap();
+        toolMap.put("brushes", brushArray);
+        toolMap.put("towels", towelArray);
+        toolMap.put("applicators", appArray);
         
         System.out.println("Welcome to your detail garage.");
         System.out.println("Please input 'chemicals' for chemicals,"
@@ -84,12 +91,48 @@ public class DetailLand {
             }//close if
             else switch (userSelection) {            
                 case "chemicals":
-                    accessChemicals(chemicalMap);
                     whileControl = false;
+                    System.out.println("Which type of chemicals would you like to view?"
+                            + "Please select 'dressings' 'sealants' or 'polishes' ");
+                    Scanner chemicalTypeScanner = new Scanner(System.in);
+                    String pickChemicalType = chemicalTypeScanner.next();
+                    switch(pickChemicalType){
+                        case "dressings":
+                            System.out.println("reached dressings");
+                            accessChemicals(dressingArray);
+                                    break;
+                        case "polishes":
+                            accessChemicals(polishArray);
+                            break;
+                        case "sealants":
+                            System.out.println("reached sealant");
+                            accessChemicals(sealantArray);
+                            break;
+                        default:
+                            System.out.println("Please select'dressings' 'sealants' or 'polishes' ");
+                    }//close swithc
                     break;
                 case "tools":
-                    accessTools(toolMap);
                     whileControl = false;
+                    System.out.println("Which type of tools would you like to view?"
+                            + " Please select 'brushes' 'towels' or 'applicators'");
+                    Scanner toolScanner = new Scanner(System.in);
+                    String pickToolType = toolScanner.next();
+                    switch(pickToolType){
+                        case "towels":
+                            accessTools(towelArray);
+                                    break;
+                        case "applicators":
+                            accessTools(appArray);
+                            break;
+                        case "brushes":
+                            accessTools(brushArray);
+                            break;
+                        default:
+                            System.out.println("Please select'dressings' 'sealants' or 'polishes' ");
+                        break;
+                       
+                    }//close switch 
                     break;
                 case "exit":
                     System.out.println("Have a nice day");
@@ -104,56 +147,25 @@ public class DetailLand {
              }//close while
        }//close main
 
-       public static void accessChemicals(Map m){
-
-        Set chemKeys = m.keySet();
-        
-    Set keys = m.keySet();
-
-       for (Iterator i = keys.iterator(); i.hasNext(); ) {
-       String key = (String) i.next();
-       HashSet value = (HashSet) m.get(key);
-           System.out.println(key + " : " + value.remove(i));
-   }
-//        Iterator chemIterator = chemKeys.iterator();
-//        Chemical chemKey = (Chemical)chemIterator.next();
-//        while(chemIterator.hasNext()){
-//            System.out.println(chemIterator.next());
-//            System.out.println(chemKey.getChemicalName());
-//        }//close while
-//           System.out.println("select one of the above chemical types to view");
-//           Scanner s = new Scanner(System.in);
-//           String accessScanner = s.next();        
-//         if("dressing".equals(accessScanner)){ 
-////             String dressingName = chemKey;
-////             System.out.println(m.get(chemKey));
-//         }
-
-           
+       public static void accessChemicals(Chemical[] c){
+                    
+                    System.out.print("You have the following in stock: ");
+                    for (int i = 0; i < c.length;i++ ){
+                    System.out.println(c[i].getChemicalName());
+                    }//close for
+      
     }//close method
 
-       public static void accessTools(Map m){
 
-        Set toolKeys = m.keySet();
-        Iterator toolIterator = toolKeys.iterator();
-        
-        while(toolIterator.hasNext()){
-            System.out.println(toolIterator.next());
-        }//close while
-           System.out.println("");
-           Scanner s = new Scanner(System.in);
-           String accessScanner = s.next();        
-           switch(accessScanner){
-               case "brushes":
-                    break;
-                case "towels":
-                    break;
-               case "applicators":
-                    break;
-                default:
-                    System.out.println("Please input one of the following: " + m.keySet());
-                    break;
-           }//close switch statements
+           
+
+       public static void accessTools(Tool[] t){
+           
+            System.out.print("You have the following in stock: ");
+            for (int i = 0; i < t.length;i++ ){
+            System.out.println(t[i].getToolName());
+                    }//close for
+//
            
     }//close method
 }//close class

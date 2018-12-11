@@ -26,4 +26,5 @@ public class Chemical {
     public String getChemicalName(){
         return chemicalName;
     }
+    
 }
