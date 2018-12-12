@@ -3,7 +3,8 @@ package detailgarage;
 
 
 public class Sealant extends Chemical{
-    private boolean natural;
-    private boolean synthetic;
+//variables not implemented yet for future extension activities
+private boolean natural;
+private boolean synthetic;
     
 }

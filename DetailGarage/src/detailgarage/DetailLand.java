@@ -3,17 +3,13 @@ package detailgarage;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
 
 public class DetailLand {
 
     public static void main(String[] args)throws InputMismatchException {
        
-        //instantiate chemical objects and place into sets for chemicalMap'chemicalTypeScanner values
+        //instantiate chemical objects and place into arrays for chemicalMap 
+        //chemicalTypeScanner values
         
         Chemical colinite845 = new Sealant();
         colinite845.setChemicalName("colinite 845");
@@ -43,7 +39,8 @@ public class DetailLand {
         chemicalMap.put("dressings", dressingArray);
         
         
-        //instantiate tool objects and place into sets toolMap'chemicalTypeScanner values
+        //instantiate tool objects and place into arrays
+        //toolMap chemicalTypeScanner values
         Tool wheelBrush = new Brush();
         wheelBrush.setToolName("wheel brush");
         Tool interiorBrush = new Brush();
@@ -68,21 +65,13 @@ public class DetailLand {
         towelArray[0] = glassTowel;
         towelArray[1] = paintTowel;
       
-        
-        HashMap<String, Tool[]> toolMap = new HashMap();
-        toolMap.put("brushes", brushArray);
-        toolMap.put("towels", towelArray);
-        toolMap.put("applicators", appArray);
-        
         System.out.println("Welcome to your detail garage.");
         System.out.println("Please input 'chemicals' for chemicals,"
             + "'tools' for tools or 'exit' to exit ");                 
         
-        
        Scanner scan = new Scanner(System.in);
       
        boolean whileControl = true;
-       
        while(whileControl){
             String userSelection = scan.next();
             if(null == userSelection){
@@ -91,47 +80,49 @@ public class DetailLand {
             }//close if
             else switch (userSelection) {            
                 case "chemicals":
-                    whileControl = false;
                     System.out.println("Which type of chemicals would you like to view?"
                             + "Please select 'dressings' 'sealants' or 'polishes' ");
                     Scanner chemicalTypeScanner = new Scanner(System.in);
                     String pickChemicalType = chemicalTypeScanner.next();
+                    //nested switch to further narrow inventory type to view
                     switch(pickChemicalType){
                         case "dressings":
-                            System.out.println("reached dressings");
                             accessChemicals(dressingArray);
-                                    break;
+                            whileControl = false;
+                            break;
                         case "polishes":
                             accessChemicals(polishArray);
+                            whileControl = false;
                             break;
                         case "sealants":
-                            System.out.println("reached sealant");
                             accessChemicals(sealantArray);
+                            whileControl = false;
                             break;
                         default:
                             System.out.println("Please select'dressings' 'sealants' or 'polishes' ");
                     }//close swithc
                     break;
                 case "tools":
-                    whileControl = false;
                     System.out.println("Which type of tools would you like to view?"
                             + " Please select 'brushes' 'towels' or 'applicators'");
                     Scanner toolScanner = new Scanner(System.in);
                     String pickToolType = toolScanner.next();
+                    //nested switch to further narrow which inventory type to view
                     switch(pickToolType){
                         case "towels":
                             accessTools(towelArray);
-                                    break;
+                            whileControl = false;
+                            break;
                         case "applicators":
                             accessTools(appArray);
+                            whileControl = false;
                             break;
                         case "brushes":
                             accessTools(brushArray);
+                            whileControl = false;
                             break;
                         default:
-                            System.out.println("Please select'dressings' 'sealants' or 'polishes' ");
-                        break;
-                       
+                            System.out.println("Please select'brushes' 'towels' or 'applicators' ");
                     }//close switch 
                     break;
                 case "exit":
@@ -149,19 +140,18 @@ public class DetailLand {
 
        public static void accessChemicals(Chemical[] c){
                     
-                    System.out.print("You have the following in stock: ");
-                    for (int i = 0; i < c.length;i++ ){
-                    System.out.println(c[i].getChemicalName());
-                    }//close for
-      
+            System.out.println("You have the following in stock: ");
+            //for loop to view all objects of selected supertype and subtype
+            for (int i = 0; i < c.length;i++ ){
+            System.out.println(c[i].getChemicalName());
+            }//close for
+
     }//close method
-
-
-           
 
        public static void accessTools(Tool[] t){
            
-            System.out.print("You have the following in stock: ");
+            System.out.println("You have the following in stock: ");
+            //for loop to view all objects of selected supertype and subtype
             for (int i = 0; i < t.length;i++ ){
             System.out.println(t[i].getToolName());
                     }//close for
